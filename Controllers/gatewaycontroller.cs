@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [Route("gateway")]
 [ApiController]
+[Authorize] // Protects all endpoints in this controller
 public class GatewayController : ControllerBase
 {
     private readonly HttpClient _httpClient;
@@ -14,7 +16,6 @@ public class GatewayController : ControllerBase
     [HttpGet("{service}/{*endpoint}")]
     public async Task<IActionResult> RouteRequest(string service, string endpoint)
     {
-        // Define service mapping
         var serviceUrls = new Dictionary<string, string>
         {
             { "serviceA", "http://localhost:5001" },
